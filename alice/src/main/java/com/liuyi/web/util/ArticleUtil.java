@@ -34,9 +34,9 @@ public class ArticleUtil {
           /// 事件
           String postTime = mainBody
                   .getElementsByAttributeValue("class", "post_time_source").get(0).text();
-          String time = "\\d{4}(\\-|\\/|.)\\d{1,2}\\1\\d{1,2}\\s{1}\\d{2}:\\d{2}:\\d{2}";
-          Pattern r = Pattern.compile(time);
-          Matcher m = r.matcher(postTime);
+//         String time = "\\d{4}(\\-|\\/|.)\\d{1,2}\\1\\d{1,2}\\s{1}\\d{2}:\\d{2}:\\d{2}";
+          Pattern r = Pattern.compile("\\d{4}(\\-|\\/|.)\\d{1,2}\\1\\d{1,2}\\s{1}\\d{2}:\\d{2}:\\d{2}");
+          Matcher m = r.matcher(postTime.trim());
           if (m.find()) {
               postTime = m.group(0);
           }
@@ -49,6 +49,7 @@ public class ArticleUtil {
           hm.setKeywords(keywords);
           hm.setCreateTime(new Date());
           hm.setEditor(editor);
+          hm.setUrl(localPath);
           hm.setTitle(head);
           hm.setArticleSource(titleSource);
           hm.setArticleContent(content);

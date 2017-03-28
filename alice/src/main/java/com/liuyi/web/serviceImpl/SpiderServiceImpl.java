@@ -42,22 +42,22 @@ public class SpiderServiceImpl implements SpiderService {
                 if (urlList == null) {
                     continue;
                 }
-//                DownTool downLoader = new DownTool();
+                DownTool downLoader = new DownTool();
                 SpiderWaitQueue sq = new SpiderWaitQueue();
                 String path = "";
                 // 下载网页
-//                try {
-//                    path = downLoader.downloadFile(url);
-//                    
-//                } catch (Exception e) {
-//                    sq.setIsDownload(2);// 设置下载失败
-//                    sq.setUrl(url);
-//                    spiderDao.updateDownloadUrl(sq);
-//                    urlList = spiderDao.selectWaitUrl();
-//                    iter = urlList.iterator();
-//                    System.out.println("下载失败" + url);
-//                    continue;
-//                }
+                try {
+                    path = downLoader.downloadFile(url);
+                    
+                } catch (Exception e) {
+                    sq.setIsDownload(2);// 设置下载失败
+                    sq.setUrl(url);
+                    spiderDao.updateDownloadUrl(sq);
+                    urlList = spiderDao.selectWaitUrl();
+                    iter = urlList.iterator();
+                    System.out.println("下载失败" + url);
+                    continue;
+                }
                 ArticleUtil articleUtil = new ArticleUtil();
                 try {
                     spiderDao.insertHtmlMessage(articleUtil.createArticleMessage(url));
