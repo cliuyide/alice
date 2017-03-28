@@ -17,21 +17,20 @@ public class SpiderDaoImpl implements SpiderDao {
 	private SpiderMapperInterface spiderMapperInterface;
 
 	@Override
-	public int insertNewUrl(String url,String fatherUrl) {
+	public int insertNewUrl(String url,String fatherUrl,Integer type) {
 		SpiderWaitQueue sq = new SpiderWaitQueue();
 		sq.setId(UUID.randomUUID().toString());
-		sq.setIsDownload(0);
+		sq.setIsDownload(0);//设置未下载
 		sq.setUrl(url);
 		sq.setCreateTime(new Date());
-		sq.setType(0);
-		sq.setIsanalysis(0);
+		sq.setType(type);
+		sq.setIsanalysis(0);//设置未解析
 		sq.setFatherUrl(fatherUrl);
 		return spiderMapperInterface.insertNewUrl(sq);
 	}
 
 	@Override
-	public int updateDownloadUrl(SpiderWaitQueue sq) {
-		sq.setIsDownload(1);//已下载
+	public int updateDownloadUrl(SpiderWaitQueue sq) {		
 		sq.setUpdateTime(new Date());
 		return spiderMapperInterface.updateDownloadUrl(sq);
 	}
