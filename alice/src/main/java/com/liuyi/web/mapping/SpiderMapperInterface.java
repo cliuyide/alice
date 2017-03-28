@@ -34,4 +34,10 @@ public interface SpiderMapperInterface {
 	 * @return
 	 */
 	public List<String> selectWaitUrl();
+	/**
+     * 通过url判断数据库是否已经有这条数据
+     * @param url
+     * @return
+     */
+    public Integer selectByUrl(String url);
 }

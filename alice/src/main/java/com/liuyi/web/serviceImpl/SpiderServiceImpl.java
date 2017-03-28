@@ -1,5 +1,6 @@
 package com.liuyi.web.serviceImpl;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -42,12 +43,16 @@ public class SpiderServiceImpl implements SpiderService {
 				SpiderWaitQueue sq=new SpiderWaitQueue();
 				sq.setUrl(url);
 				sq.setDownpath(path);
+				Date now=new Date();
+				sq.setUpdateTime(now);
 				spiderDao.updateDownloadUrl(sq);
 				// 提取出下载网页中的 URL
 				Set<String> links = HtmlParserTool.extracLinks(url, filter);
 				// 新的未访问的 URL 入队
 				for (String link : links) {
-					spiderDao.insertNewUrl(link);
+				    if(spiderDao.selectByUrl(link)==0){
+				        spiderDao.insertNewUrl(link,url);
+				    }	
 				}
 				urlList=spiderDao.selectWaitUrl();
 				iter=urlList.iterator();
@@ -58,13 +63,13 @@ public class SpiderServiceImpl implements SpiderService {
 
 	@Override
 	public int insertNewUrl(String url) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public int updateDownloadUrl(String url) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 

@@ -10,7 +10,7 @@ public interface SpiderDao {
 	 * @param url
 	 * @return
 	 */
-	public int insertNewUrl(String url);
+	public int insertNewUrl(String url,String fatherUrl);
 	/**
 	 * 更新已下载url
 	 * @param url
@@ -28,4 +28,10 @@ public interface SpiderDao {
 	 * @return
 	 */
 	public List<String> selectWaitUrl();
+	/**
+	 * 通过url判断数据库是否已经有这条数据
+	 * @param url
+	 * @return
+	 */
+	public Integer selectByUrl(String url);
 }

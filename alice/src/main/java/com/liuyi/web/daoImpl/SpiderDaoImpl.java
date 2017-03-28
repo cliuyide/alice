@@ -1,5 +1,6 @@
 package com.liuyi.web.daoImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,17 +17,22 @@ public class SpiderDaoImpl implements SpiderDao {
 	private SpiderMapperInterface spiderMapperInterface;
 
 	@Override
-	public int insertNewUrl(String url) {
+	public int insertNewUrl(String url,String fatherUrl) {
 		SpiderWaitQueue sq = new SpiderWaitQueue();
 		sq.setId(UUID.randomUUID().toString());
 		sq.setIsDownload(0);
 		sq.setUrl(url);
+		sq.setCreateTime(new Date());
+		sq.setType(0);
+		sq.setIsanalysis(0);
+		sq.setFatherUrl(fatherUrl);
 		return spiderMapperInterface.insertNewUrl(sq);
 	}
 
 	@Override
 	public int updateDownloadUrl(SpiderWaitQueue sq) {
-		sq.setIsDownload(1);
+		sq.setIsDownload(1);//已下载
+		sq.setUpdateTime(new Date());
 		return spiderMapperInterface.updateDownloadUrl(sq);
 	}
 
@@ -42,5 +48,10 @@ public class SpiderDaoImpl implements SpiderDao {
 	public List<String> selectWaitUrl() {
 		return spiderMapperInterface.selectWaitUrl();
 	}
+
+    @Override
+    public Integer selectByUrl(String url) {
+        return spiderMapperInterface.selectByUrl(url);
+    }
 
 }

@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liuyi.web.mapping.SpiderMapperInterface">
 	<insert id="insertNewUrl" parameterType="com.liuyi.web.model.SpiderWaitQueue">
-		insert into spider_waitqueue (id, url, isdownload)
-		values (#{id,jdbcType=CHAR}, #{url,jdbcType=VARCHAR},#{isDownload,jdbcType=INTEGER})
+		insert into spider_waitqueue (id,father_url, url, isdownload,downpath,isanalysis,type,create_time)
+		values (#{id,jdbcType=CHAR},#{fatherUrl}, #{url,jdbcType=VARCHAR},#{isDownload,jdbcType=INTEGER},#{downpath},
+		#{isanalysis},#{type},#{createTime})
 	</insert>
 	<update id="updateDownloadUrl" parameterType="com.liuyi.web.model.SpiderWaitQueue" >
 	    update spider_waitqueue
@@ -15,7 +16,16 @@
 	        isdownload = #{isDownload,jdbcType=INTEGER},
 	      </if>
 	      <if test="downpath != null" >
-	        downpath = #{downpath,jdbcType=INTEGER},
+	        downpath = #{downpath},
+	      </if>
+	      <if test="isanalysis != null" >
+	        isanalysis = #{isanalysis,jdbcType=INTEGER},
+	      </if>
+	      <if test="type != null" >
+	        type = #{type,jdbcType=INTEGER},
+	      </if>
+	      <if test="updateTime != null" >
+	        update_time = #{updateTime},
 	      </if>
 	    </set>
 	    where url = #{url,jdbcType=CHAR}
@@ -25,5 +35,8 @@
 	    url
 	    from spider_waitqueue
 	    where isdownload=0
+	 </select>
+	 <select id="selectByUrl" resultType="Integer" >
+	    select count(1) from spider_waitqueue where url=#{url}
 	 </select>
 </mapper>
