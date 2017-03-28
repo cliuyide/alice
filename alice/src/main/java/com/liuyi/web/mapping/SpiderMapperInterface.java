@@ -40,4 +40,9 @@ public interface SpiderMapperInterface {
      * @return
      */
     public Integer selectByUrl(String url);
+    /**
+     * @param htmlMessage
+     * @return
+     */
+    public Integer insertHtmlMessage(HtmlMessage htmlMessage);
 }

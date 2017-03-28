@@ -35,8 +35,15 @@
 	    url
 	    from spider_waitqueue
 	    where isdownload=0
+	    limit 0,1
 	 </select>
 	 <select id="selectByUrl" resultType="Integer" >
 	    select count(1) from spider_waitqueue where url=#{url}
 	 </select>
+	 <insert id="insertHtmlMessage" parameterType="com.liuyi.web.model.HtmlMessage">
+		insert into html_message (id, url, type,keywords,editor,title,article_create_time,
+		article_source,article_content,create_time)
+		values (#{id,jdbcType=CHAR},#{url},#{type},#{keywords},#{editor},
+		#{title},#{articleCreateTime},#{articleSource},#{articleContent},#{createTime})
+	 </insert>
 </mapper>
