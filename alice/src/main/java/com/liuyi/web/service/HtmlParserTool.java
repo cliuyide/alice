@@ -37,12 +37,11 @@ public class HtmlParserTool {
 //	        for (Element link : imports) {  
 //	            System.out.println("importantLink"+link.attr("abs:href"));  
 //	        }  
-	      
+	        
 	        for (Element link : links) {  
 	        	String addUrl=link.attr("abs:href");
 	        	if(StringUtils.isNotBlank(addUrl)&&filter.accept(addUrl)){
 	        		result.add(addUrl);
-	        		i++;
 	        		System.out.println("link"+link.attr("abs:href"));
 	        	}
 	        	
