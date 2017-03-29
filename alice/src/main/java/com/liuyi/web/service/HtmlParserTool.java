@@ -1,7 +1,10 @@
 package com.liuyi.web.service;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.apache.commons.lang.StringUtils;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -10,57 +13,40 @@ import org.htmlparser.filters.OrFilter;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
+import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class HtmlParserTool {
+	private static int i=0;
 	// 获取一个网站上的链接，filter 用来过滤链接
-	public static Set<String> extracLinks(String url, LinkFilter filter) {
-		Set<String> links = new HashSet<String>();
-		try {
-			Parser parser = new Parser(url);
-			parser.setEncoding("utf-8");
-			// 过滤 <frame >标签的 filter，用来提取 frame 标签里的 src 属性
-			NodeFilter frameFilter = new NodeFilter() {
-				private static final long serialVersionUID = 1L;
-
-				public boolean accept(Node node) {
-					if (node.getText().startsWith("frame src=")) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-			};
-			// OrFilter 来设置过滤 <a> 标签和 <frame> 标签
-			OrFilter linkFilter = new OrFilter(new NodeClassFilter(
-					LinkTag.class), frameFilter);
-			// 得到所有经过过滤的标签
-			NodeList list = parser.extractAllNodesThatMatch(linkFilter);
-			for (int i = 0; i < list.size(); i++) {
-				Node tag = list.elementAt(i);
-				if (tag instanceof LinkTag)// <a> 标签
-				{
-					LinkTag link = (LinkTag) tag;
-					String linkUrl = link.getLink();// URL
-					if (filter.accept(linkUrl))
-						links.add(linkUrl);
-				} else// <frame> 标签
-				{
-					// 提取 frame 里 src 属性的链接， 如 <frame src="test.html"/>
-					String frame = tag.getText();
-					int start = frame.indexOf("src=");
-					frame = frame.substring(start);
-					int end = frame.indexOf(" ");
-					if (end == -1)
-						end = frame.indexOf(">");
-					String frameUrl = frame.substring(5, end - 1);
-					if (filter.accept(frameUrl))
-						links.add(frameUrl);
-				}
-			}
-		} catch (ParserException e) {
-			e.printStackTrace();
-		}
-		return links;
+	public static Set<String> extracLinks(String url, LinkFilter filter) throws IOException {	
+			Set<String> result=new HashSet<String>();
+	        Document doc = Jsoup.connect(url).get();  
+	        Elements links = doc.select("a[href]");  
+//	        Elements media = doc.select("[src]");  
+//	        Elements imports = doc.select("link[href]");  
+//	        for (Element src : media) {  
+//	            if (src.tagName().equals("img"))  
+//	               System.out.println("图片"+src.attr("abs:src"));
+//	            else  
+//	            	System.out.println("src"+src.attr("abs:src")); 
+//	        }   
+//	        for (Element link : imports) {  
+//	            System.out.println("importantLink"+link.attr("abs:href"));  
+//	        }  
+	      
+	        for (Element link : links) {  
+	        	String addUrl=link.attr("abs:href");
+	        	if(StringUtils.isNotBlank(addUrl)&&filter.accept(addUrl)){
+	        		result.add(addUrl);
+	        		i++;
+	        		System.out.println("link"+link.attr("abs:href"));
+	        	}
+	        	
+	        }  
+		return result;
 	}
-
 }
