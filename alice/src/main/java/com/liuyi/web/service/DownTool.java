@@ -41,11 +41,11 @@ public class DownTool {
 		HttpClient httpClient = new HttpClient();
 		// 设置 HTTP连接超时 200s
 		httpClient.getHttpConnectionManager().getParams()
-				.setConnectionTimeout(20000);
+				.setConnectionTimeout(5000);
 		// 2.生成 GetMethod对象并设置参数
 		GetMethod getMethod = new GetMethod(url);
 		// 设置 get请求超时 5s
-		getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 20000);
+		getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);
 		// 设置请求重试处理
 		getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
 				new DefaultHttpMethodRetryHandler());
