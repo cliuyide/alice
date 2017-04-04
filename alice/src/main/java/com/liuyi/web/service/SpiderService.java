@@ -2,6 +2,8 @@ package com.liuyi.web.service;
 
 import java.util.List;
 
+import com.liuyi.web.model.SpiderWaitQueue;
+
 public interface SpiderService {
 	/**
 	 * 调用处理url方法
@@ -18,10 +20,10 @@ public interface SpiderService {
 	public int insertNewUrl(String url);
 	/**
 	 * 更新已下载url
-	 * @param url
+	 * @param SpiderWaitQueue
 	 * @return
 	 */
-	public int updateDownloadUrl(String url);
+	public int updateDownloadUrl(SpiderWaitQueue sq);
 	/**
 	 * 插入已下载url信息
 	 * @param url
@@ -33,4 +35,8 @@ public interface SpiderService {
 	 * @return
 	 */
 	public List<String> selectWaitUrl();
+	 /**
+     * @return
+     */
+    public List<String> selectIsNotAnalysis();
 }

@@ -1,6 +1,7 @@
 package com.liuyi.web.dao;
 
 import java.util.List;
+
 import com.liuyi.web.model.HtmlMessage;
 import com.liuyi.web.model.SpiderWaitQueue;
 
@@ -49,4 +50,8 @@ public interface SpiderDao {
      * @return
      */
     public Integer insertHtmlMessage(HtmlMessage htmlMessage);
+    /**
+     * @return
+     */
+    public List<String> selectIsNotAnalysis();
 }

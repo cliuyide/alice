@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyi.web.mapping.HtmlMeituanMapperInterface" >
+  <resultMap id="BaseResultMap" type="com.liuyi.web.model.HtmlMeituan" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="CHAR" />
+    <result column="grade_type" property="gradeType" jdbcType="VARCHAR" />
+    <result column="component_description" property="componentDescription" jdbcType="VARCHAR" />
+    <result column="default_price" property="defaultPrice" jdbcType="DOUBLE" />
+    <result column="discount_price" property="discountPrice" jdbcType="DOUBLE" />
+    <result column="out_quantities" property="outQuantities" jdbcType="INTEGER" />
+    <result column="rating" property="rating" jdbcType="DOUBLE" />
+    <result column="collect_count" property="collectCount" jdbcType="INTEGER" />
+    <result column="rating_persons" property="ratingPersons" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, url, keyword, city, grade_type, component_description, default_price, discount_price, 
+    out_quantities, rating, collect_count, rating_persons, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from html_meituan
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from html_meituan
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.liuyi.web.model.HtmlMeituan" >
+    insert into html_meituan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="keyword != null" >
+        keyword,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="gradeType != null" >
+        grade_type,
+      </if>
+      <if test="componentDescription != null" >
+        component_description,
+      </if>
+      <if test="defaultPrice != null" >
+        default_price,
+      </if>
+      <if test="discountPrice != null" >
+        discount_price,
+      </if>
+      <if test="outQuantities != null" >
+        out_quantities,
+      </if>
+      <if test="rating != null" >
+        rating,
+      </if>
+      <if test="collectCount != null" >
+        collect_count,
+      </if>
+      <if test="ratingPersons != null" >
+        rating_persons,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=CHAR},
+      </if>
+      <if test="gradeType != null" >
+        #{gradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="componentDescription != null" >
+        #{componentDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultPrice != null" >
+        #{defaultPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="discountPrice != null" >
+        #{discountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="outQuantities != null" >
+        #{outQuantities,jdbcType=INTEGER},
+      </if>
+      <if test="rating != null" >
+        #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="collectCount != null" >
+        #{collectCount,jdbcType=INTEGER},
+      </if>
+      <if test="ratingPersons != null" >
+        #{ratingPersons,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuyi.web.model.HtmlMeituan" >
+    update html_meituan
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=CHAR},
+      </if>
+      <if test="gradeType != null" >
+        grade_type = #{gradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="componentDescription != null" >
+        component_description = #{componentDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultPrice != null" >
+        default_price = #{defaultPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="discountPrice != null" >
+        discount_price = #{discountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="outQuantities != null" >
+        out_quantities = #{outQuantities,jdbcType=INTEGER},
+      </if>
+      <if test="rating != null" >
+        rating = #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="collectCount != null" >
+        collect_count = #{collectCount,jdbcType=INTEGER},
+      </if>
+      <if test="ratingPersons != null" >
+        rating_persons = #{ratingPersons,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liuyi.web.model.HtmlMeituan" >
+    update html_meituan
+    set url = #{url,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      city = #{city,jdbcType=CHAR},
+      grade_type = #{gradeType,jdbcType=VARCHAR},
+      component_description = #{componentDescription,jdbcType=VARCHAR},
+      default_price = #{defaultPrice,jdbcType=DOUBLE},
+      discount_price = #{discountPrice,jdbcType=DOUBLE},
+      out_quantities = #{outQuantities,jdbcType=INTEGER},
+      rating = #{rating,jdbcType=DOUBLE},
+      collect_count = #{collectCount,jdbcType=INTEGER},
+      rating_persons = #{ratingPersons,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

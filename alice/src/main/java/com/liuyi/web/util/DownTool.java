@@ -1,4 +1,4 @@
-package com.liuyi.web.service;
+package com.liuyi.web.util;
 
 import java.io.*;
 import org.apache.commons.httpclient.*;

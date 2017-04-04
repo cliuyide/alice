@@ -45,4 +45,8 @@ public interface SpiderMapperInterface {
      * @return
      */
     public Integer insertHtmlMessage(HtmlMessage htmlMessage);
+    /**
+     * @return
+     */
+    public List<String> selectIsNotAnalysis();
 }

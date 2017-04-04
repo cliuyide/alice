@@ -3,8 +3,10 @@ package com.liuyi.web.daoImpl;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.liuyi.web.dao.SpiderDao;
 import com.liuyi.web.mapping.SpiderMapperInterface;
 import com.liuyi.web.model.HtmlMessage;
@@ -57,5 +59,10 @@ public class SpiderDaoImpl implements SpiderDao {
         
         return spiderMapperInterface.insertHtmlMessage(htmlMessage);
     }
+
+	@Override
+	public List<String> selectIsNotAnalysis() {
+		return spiderMapperInterface.selectIsNotAnalysis();
+	}
     
 }

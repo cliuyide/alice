@@ -46,4 +46,11 @@
 		values (#{id,jdbcType=CHAR},#{url},#{type},#{keywords},#{editor},
 		#{title},#{articleCreateTime},#{articleSource},#{articleContent},#{createTime})
 	 </insert>
+	 <select id="selectIsNotAnalysis" resultType="String">
+		 select 
+		    url
+		    from spider_waitqueue
+		    where isanalysis=0 and type=2
+		    limit 0,10
+	 </select>
 </mapper>
