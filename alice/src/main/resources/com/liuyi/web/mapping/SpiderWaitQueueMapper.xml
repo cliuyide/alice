@@ -35,7 +35,8 @@
 	    url
 	    from spider_waitqueue
 	    where isdownload=0
-	    limit 0,1
+	    order by create_time
+	    limit 0,10
 	 </select>
 	 <select id="selectByUrl" resultType="Integer" >
 	    select count(1) from spider_waitqueue where url=#{url}
@@ -50,7 +51,14 @@
 		 select 
 		    url
 		    from spider_waitqueue
-		    where isanalysis=0 and type=2
+		    where isanalysis=0 and type=2 and analysisError &lt; 3
 		    limit 0,10
 	 </select>
+	 <update id="updateAnalysisError">
+		 update 
+			 spider_waitqueue
+			 set analysisError=analysisError+1
+		    where url=#{url}
+	 </update>
+	 
 </mapper>

@@ -54,4 +54,10 @@ public interface SpiderDao {
      * @return
      */
     public List<String> selectIsNotAnalysis();
+    /**
+     * 将失败url的等级加1超过三将不再解析
+     * @param url
+     * @return
+     */
+    public int updateAnalysisError(String url);
 }

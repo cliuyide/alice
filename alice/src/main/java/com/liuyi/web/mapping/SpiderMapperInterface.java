@@ -45,8 +45,14 @@ public interface SpiderMapperInterface {
      * @return
      */
     public Integer insertHtmlMessage(HtmlMessage htmlMessage);
-    /**
+    /**查询待解析列表
      * @return
      */
     public List<String> selectIsNotAnalysis();
+    /**
+     * 将失败url的等级加1超过三将不再解析
+     * @param url
+     * @return
+     */
+    public int updateAnalysisError(String url);
 }

@@ -64,5 +64,10 @@ public class SpiderDaoImpl implements SpiderDao {
 	public List<String> selectIsNotAnalysis() {
 		return spiderMapperInterface.selectIsNotAnalysis();
 	}
+
+	@Override
+	public int updateAnalysisError(String url) {
+		return spiderMapperInterface.updateAnalysisError(url);
+	}
     
 }

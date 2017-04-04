@@ -14,7 +14,7 @@ import com.liuyi.web.model.HtmlMeituan;
 public class MeiTuanAnalysisUtil {
 	public HtmlMeituan meituanAnalysis(String url) throws IOException {
 		HtmlMeituan hm=new HtmlMeituan();
-		Document html=Jsoup.connect(url).timeout(5000).get();
+		Document html=Jsoup.connect(url).timeout(10000).get();
 		//获取页面关键字
 		Elements keywords=this.replaceEmpty(html.getElementsByAttributeValue("name","keywords"));
 		String keyword=keywords.get(0).attr("content");
@@ -39,14 +39,18 @@ public class MeiTuanAnalysisUtil {
 		Double dfprice=StringUtils.isNotBlank(defaultPrice)?Double.parseDouble(defaultPrice):0;
 		hm.setDefaultPrice(dfprice);
 		//获取美团价格
-		Elements meiTuanPriceEl=this.replaceEmpty(html.getElementsByClass("J-buy btn-hot buy"));
-		String meiTuanPriceElHref=meiTuanPriceEl.first().attr("href");
-		String regexp="\\b/deal\\b.*";
-		String priceElHref=this.replace(url,regexp,meiTuanPriceElHref);
-		Document pricehtml=Jsoup.connect(priceElHref).timeout(5000).get(); 
-		String price=pricehtml.getElementById("deal-buy-price").html();
-		Double meituanprice=StringUtils.isNotBlank(price)?Double.parseDouble(price):0;
-		hm.setDiscountPrice(meituanprice);
+		try {
+			Elements meiTuanPriceEl=this.replaceEmpty(html.getElementsByClass("J-buy btn-hot buy"));
+			String meiTuanPriceElHref=meiTuanPriceEl.first().attr("href");
+			String regexp="\\b/deal\\b.*";
+			String priceElHref=this.replace(url,regexp,meiTuanPriceElHref);
+			Document pricehtml=Jsoup.connect(priceElHref).timeout(10000).get(); 
+			String price=pricehtml.getElementById("deal-buy-price").html();
+			Double meituanprice=StringUtils.isNotBlank(price)?Double.parseDouble(price):0;
+			hm.setDiscountPrice(meituanprice);
+		} catch (Exception e) {
+			hm.setDiscountPrice(dfprice);
+		}
 		//已售出
 		String outCount=this.replaceEmpty(html.getElementsByClass("deal-component-rating-sold-count")).first().html();
 		Integer oc=StringUtils.isNotBlank(outCount)?Integer.valueOf(outCount):0;

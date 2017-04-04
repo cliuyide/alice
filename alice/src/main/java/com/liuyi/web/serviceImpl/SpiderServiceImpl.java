@@ -135,4 +135,10 @@ public class SpiderServiceImpl implements SpiderService {
 		return spiderDao.selectIsNotAnalysis();
 	}
 
+	@Override
+	public int updateAnalysisError(String url) {
+		
+		return spiderDao.updateAnalysisError(url);
+	}
+
 }

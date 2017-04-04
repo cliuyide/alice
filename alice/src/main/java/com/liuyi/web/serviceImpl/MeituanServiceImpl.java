@@ -34,6 +34,7 @@ public class MeituanServiceImpl implements MeituanService {
 				sq.setUrl(url);
 				spiderService.updateDownloadUrl(sq);
 			} catch (Exception e) {
+				spiderService.updateAnalysisError(url);
 				System.out.println(url+"解析失败");
 				continue;
 			}
