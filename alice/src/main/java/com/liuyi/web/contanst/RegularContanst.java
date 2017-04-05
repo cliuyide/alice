@@ -8,5 +8,5 @@ public class RegularContanst {
 	/**
      * 美团美食
      */
-	public final static String MEITUAN_DEAL = "[a-zA-z]+://[^\\s]+?/deal/\\d+.*";
+	public final static String MEITUAN_DEAL = "[a-zA-z]+://[^\\s]+?/deal/\\d+.html";
 }

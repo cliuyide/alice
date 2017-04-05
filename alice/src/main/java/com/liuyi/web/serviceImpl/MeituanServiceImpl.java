@@ -40,7 +40,7 @@ public class MeituanServiceImpl implements MeituanService {
 			}
 			
 		}		
-		analysisHtmlMeituan();
+		this.analysisHtmlMeituan();
 	}
 
 }

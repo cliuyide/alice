@@ -31,16 +31,14 @@ public class SpiderServiceImpl implements SpiderService {
 	public int crawling(List<String> urlList) {
 		LinkFilter filter = new LinkFilter() {
 			public boolean accept(String url) {
-				String pattern = RegularContanst.MEITUAN_DEAL;
-				Pattern r = Pattern.compile(pattern);
-				Matcher m = r.matcher(url);
 				if (StringUtils.isNotBlank(url) && url.contains("meituan")
-						&& spiderDao.selectByUrl(url) == 0&&m.matches()) {
+						&& spiderDao.selectByUrl(url) == 0) {
 					return true;
 				} else
 					return false;
 			}
 		};
+		String pattern = RegularContanst.MEITUAN_DEAL;
 		if (urlList != null && urlList.size() > 0) {
 			Iterator<String> iter = urlList.iterator();
 			while (iter.hasNext()) {
@@ -48,33 +46,33 @@ public class SpiderServiceImpl implements SpiderService {
 				if (urlList == null) {
 					continue;
 				}
-//				DownTool downLoader = new DownTool();
+				// DownTool downLoader = new DownTool();
 				SpiderWaitQueue sq = new SpiderWaitQueue();
 				String path = "";
-//				// 下载网页
-//				try {
-//					path = downLoader.downloadFile(url);
-//
-//				} catch (Exception e) {
-//					sq.setIsDownload(2);// 设置下载失败
-//					sq.setUrl(url);
-//					spiderDao.updateDownloadUrl(sq);
-//					System.out.println("下载失败" + url);
-//					continue;
-//				}
-//				ArticleUtil articleUtil = new ArticleUtil();
-//				try {
-//					spiderDao.insertHtmlMessage(articleUtil
-//							.createArticleMessage(url));
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//					continue;
-//				} catch (ParseException e) {
-//					e.printStackTrace();
-//					continue;
-//				} catch (Exception e) {
-//
-//				}
+				// // 下载网页
+				// try {
+				// path = downLoader.downloadFile(url);
+				//
+				// } catch (Exception e) {
+				// sq.setIsDownload(2);// 设置下载失败
+				// sq.setUrl(url);
+				// spiderDao.updateDownloadUrl(sq);
+				// System.out.println("下载失败" + url);
+				// continue;
+				// }
+				// ArticleUtil articleUtil = new ArticleUtil();
+				// try {
+				// spiderDao.insertHtmlMessage(articleUtil
+				// .createArticleMessage(url));
+				// } catch (IOException e) {
+				// e.printStackTrace();
+				// continue;
+				// } catch (ParseException e) {
+				// e.printStackTrace();
+				// continue;
+				// } catch (Exception e) {
+				//
+				// }
 				sq.setUrl(url);
 				sq.setDownpath(path);
 				Date now = new Date();
@@ -88,19 +86,40 @@ public class SpiderServiceImpl implements SpiderService {
 					// 新的未访问的 URL 入队
 					for (String link : links) {
 						Integer type = 0;// 网页类型默认普通
+						Pattern r = Pattern.compile(pattern);
+						Matcher matcher = r.matcher(link);
+
 						if (link.contains("deal")) {
-							type = 2;
+							if (matcher.find()) {
+								String link1 = matcher.group(0);
+								type = 2;
+								if (spiderDao.selectByUrl(link1) == 0) {
+									System.out.println(link1 + "添加成功");
+									spiderDao.insertNewUrl(link1, url, type);
+								}
+							} else {
+								System.out.println(link + "添加失败");
+							}
+
+						} else {
+							spiderDao.insertNewUrl(link, url, type);
 						}
-						spiderDao.insertNewUrl(link, url, type);
+
 					}
 				} catch (IOException e) {
+					sq.setIsDownload(2);// 设置下载失败
+					sq.setUrl(url);
+					spiderDao.updateDownloadUrl(sq);
 					e.printStackTrace();
+					continue;
 				} catch (Exception e) {
-
+					sq.setIsDownload(2);// 设置下载失败
+					sq.setUrl(url);
+					spiderDao.updateDownloadUrl(sq);
+					continue;
 				}
 			}
 			urlList = spiderDao.selectWaitUrl();
-			iter = urlList.iterator();
 			this.crawling(urlList);
 		}
 		return 0;
@@ -137,7 +156,7 @@ public class SpiderServiceImpl implements SpiderService {
 
 	@Override
 	public int updateAnalysisError(String url) {
-		
+
 		return spiderDao.updateAnalysisError(url);
 	}
 

@@ -24,7 +24,8 @@ public class HtmlParserTool {
 	// 获取一个网站上的链接，filter 用来过滤链接
 	public static Set<String> extracLinks(String url, LinkFilter filter) throws IOException {	
 			Set<String> result=new HashSet<String>();
-	        Document doc = Jsoup.connect(url).get();  
+	        Document doc = Jsoup.connect(url).header("User-Agent",
+	        		"Mozilla/5.0 (Windows; U; Windows NT 5.1) Gecko/20070309 Firefox/2.0.0.3").get();  
 	        Elements links = doc.select("a[href]");  
 //	        Elements media = doc.select("[src]");  
 //	        Elements imports = doc.select("link[href]");  
@@ -42,7 +43,6 @@ public class HtmlParserTool {
 	        	String addUrl=link.attr("abs:href");
 	        	if(StringUtils.isNotBlank(addUrl)&&filter.accept(addUrl)){
 	        		result.add(addUrl);
-	        		System.out.println("link"+link.attr("abs:href"));
 	        	}
 	        	
 	        }  

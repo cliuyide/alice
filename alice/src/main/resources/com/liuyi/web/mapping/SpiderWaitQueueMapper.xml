@@ -31,10 +31,10 @@
 	    where url = #{url,jdbcType=CHAR}
 	 </update>
 	 <select id="selectWaitUrl" resultType="String" >
-	    select DISTINCT 
+	    select  
 	    url
 	    from spider_waitqueue
-	    where isdownload=0
+	    where isdownload=0 and type=0
 	    order by create_time
 	    limit 0,10
 	 </select>

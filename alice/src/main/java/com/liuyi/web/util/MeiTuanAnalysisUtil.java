@@ -14,7 +14,8 @@ import com.liuyi.web.model.HtmlMeituan;
 public class MeiTuanAnalysisUtil {
 	public HtmlMeituan meituanAnalysis(String url) throws IOException {
 		HtmlMeituan hm=new HtmlMeituan();
-		Document html=Jsoup.connect(url).timeout(10000).get();
+		Document html=Jsoup.connect(url).header("User-Agent",
+        		"Mozilla/5.0 (Windows; U; Windows NT 5.1) Gecko/20070309 Firefox/2.0.0.3").timeout(10000).get();
 		//获取页面关键字
 		Elements keywords=this.replaceEmpty(html.getElementsByAttributeValue("name","keywords"));
 		String keyword=keywords.get(0).attr("content");
@@ -44,7 +45,8 @@ public class MeiTuanAnalysisUtil {
 			String meiTuanPriceElHref=meiTuanPriceEl.first().attr("href");
 			String regexp="\\b/deal\\b.*";
 			String priceElHref=this.replace(url,regexp,meiTuanPriceElHref);
-			Document pricehtml=Jsoup.connect(priceElHref).timeout(10000).get(); 
+			Document pricehtml=Jsoup.connect(priceElHref).header("User-Agent",
+	        		"Mozilla/5.0 (Windows; U; Windows NT 5.1) Gecko/20070309 Firefox/2.0.0.3").timeout(10000).get(); 
 			String price=pricehtml.getElementById("deal-buy-price").html();
 			Double meituanprice=StringUtils.isNotBlank(price)?Double.parseDouble(price):0;
 			hm.setDiscountPrice(meituanprice);
