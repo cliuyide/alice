@@ -30,6 +30,16 @@ public class HtmlMeituan {
     private Date createTime;//创建时间
 
     private Date updateTime;//更新时间
+    
+    public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	private Date endTime;//截止时间
 
     public String getId() {
         return id;

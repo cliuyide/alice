@@ -39,7 +39,7 @@
 	    limit 0,10
 	 </select>
 	 <select id="selectByUrl" resultType="Integer" >
-	    select count(1) from spider_waitqueue where url=#{url}
+	 	select  count(1) from system_users where exists(select 1 from spider_waitqueue where url=#{url})
 	 </select>
 	 <insert id="insertHtmlMessage" parameterType="com.liuyi.web.model.HtmlMessage">
 		insert into html_message (id, url, type,keywords,editor,title,article_create_time,

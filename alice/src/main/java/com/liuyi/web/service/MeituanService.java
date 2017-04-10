@@ -7,4 +7,5 @@ public interface MeituanService {
 	 * 解析美团页面
 	 */
 	public void analysisHtmlMeituan() throws IOException ;
+	
 }

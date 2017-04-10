@@ -40,7 +40,9 @@ public class MeituanServiceImpl implements MeituanService {
 			}
 			
 		}		
-		this.analysisHtmlMeituan();
+		if(listUrl!=null&&listUrl.size()>0){
+			this.analysisHtmlMeituan();
+		}
 	}
 
 }

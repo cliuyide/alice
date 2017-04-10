@@ -16,10 +16,11 @@
     <result column="rating_persons" property="ratingPersons" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, url, keyword, city, grade_type, component_description, default_price, discount_price, 
-    out_quantities, rating, collect_count, rating_persons, create_time, update_time
+    out_quantities, rating, collect_count, rating_persons,end_time, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -76,6 +77,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -119,6 +123,9 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -164,6 +171,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="endTime != null" >
+        end_time=#{endTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
@@ -181,7 +191,8 @@
       collect_count = #{collectCount,jdbcType=INTEGER},
       rating_persons = #{ratingPersons,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      end_time=#{endTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
 </mapper>
