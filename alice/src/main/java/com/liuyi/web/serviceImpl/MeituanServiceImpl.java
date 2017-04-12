@@ -27,17 +27,18 @@ public class MeituanServiceImpl implements MeituanService {
 	public void analysisHtmlMeituan() throws IOException {
 		List<String> listUrl = spiderService.selectIsNotAnalysis();
 		for (int i = 0; i < 5; i++) {
-			AnalysisThread at = new AnalysisThread(listUrl, i, meituanDao,
-					spiderService);
-			Thread thread = new Thread(at);
-			try {
-				Thread.sleep(500);
-				thread.start();
-				thread.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if(i*10<listUrl.size()){
+				AnalysisThread at = new AnalysisThread(listUrl, i, meituanDao,
+						spiderService);
+				Thread thread = new Thread(at);
+				try {
+					Thread.sleep(500);
+					thread.start();
+					thread.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-
 		}
 		if (listUrl != null && listUrl.size() > 0) {
 			this.analysisHtmlMeituan();

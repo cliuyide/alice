@@ -35,7 +35,7 @@
 	    url
 	    from spider_waitqueue
 	    where isdownload=0 and type=0
-	    order by create_time,extractRank desc
+	    order by extractRank desc,create_time
 	    limit 0,50
 	 </select>
 	 <select id="selectByUrl" resultType="Integer" >

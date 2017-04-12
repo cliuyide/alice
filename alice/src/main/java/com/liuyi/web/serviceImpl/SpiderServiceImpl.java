@@ -30,6 +30,7 @@ public class SpiderServiceImpl implements SpiderService {
 		};
 		if (urlList != null && urlList.size() > 0) {
 			for (int i = 0; i < 5; i++) {
+				if(i*10<urlList.size()){
 				GetUrlThread gt = new GetUrlThread(urlList, i, spiderDao,
 						filter);
 				Thread thread = new Thread(gt);
@@ -40,7 +41,7 @@ public class SpiderServiceImpl implements SpiderService {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
+				}
 			}
 			List<String> urlList1 = spiderDao.selectWaitUrl();
 			this.crawling(urlList1);
