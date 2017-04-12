@@ -12,7 +12,7 @@ public interface SpiderDao {
      * @param url
      * @return
      */
-    public int insertNewUrl(String url, String fatherUrl, Integer type);
+    public int insertNewUrl(String url, String fatherUrl, Integer type,Integer extractRank);
     
     /**
      * 更新已下载url

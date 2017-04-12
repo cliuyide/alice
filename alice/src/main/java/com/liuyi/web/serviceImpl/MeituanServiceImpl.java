@@ -12,6 +12,8 @@ import com.liuyi.web.model.HtmlMeituan;
 import com.liuyi.web.model.SpiderWaitQueue;
 import com.liuyi.web.service.MeituanService;
 import com.liuyi.web.service.SpiderService;
+import com.liuyi.web.thread.AnalysisThread;
+import com.liuyi.web.thread.GetUrlThread;
 import com.liuyi.web.util.MeiTuanAnalysisUtil;
 
 @Service
@@ -20,27 +22,24 @@ public class MeituanServiceImpl implements MeituanService {
 	private SpiderService spiderService;
 	@Autowired
 	private MeituanDao meituanDao;
+
 	@Override
 	public void analysisHtmlMeituan() throws IOException {
-		List<String> listUrl=spiderService.selectIsNotAnalysis();
-		for(String url:listUrl){
+		List<String> listUrl = spiderService.selectIsNotAnalysis();
+		for (int i = 0; i < 5; i++) {
+			AnalysisThread at = new AnalysisThread(listUrl, i, meituanDao,
+					spiderService);
+			Thread thread = new Thread(at);
 			try {
-				HtmlMeituan mtau = new MeiTuanAnalysisUtil().meituanAnalysis(url);
-				mtau.setId(UUID.randomUUID().toString());
-				mtau.setUrl(url);
-				meituanDao.insertSelective(mtau);
-				SpiderWaitQueue sq=new SpiderWaitQueue();
-				sq.setIsanalysis(1);
-				sq.setUrl(url);
-				spiderService.updateDownloadUrl(sq);
-			} catch (Exception e) {
-				spiderService.updateAnalysisError(url);
-				System.out.println(url+"解析失败");
-				continue;
+				Thread.sleep(500);
+				thread.start();
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			
-		}		
-		if(listUrl!=null&&listUrl.size()>0){
+
+		}
+		if (listUrl != null && listUrl.size() > 0) {
 			this.analysisHtmlMeituan();
 		}
 	}

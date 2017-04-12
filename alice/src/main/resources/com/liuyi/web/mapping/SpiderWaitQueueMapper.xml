@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liuyi.web.mapping.SpiderMapperInterface">
 	<insert id="insertNewUrl" parameterType="com.liuyi.web.model.SpiderWaitQueue">
-		insert into spider_waitqueue (id,father_url, url, isdownload,downpath,isanalysis,type,create_time)
-		values (#{id,jdbcType=CHAR},#{fatherUrl}, #{url,jdbcType=VARCHAR},#{isDownload,jdbcType=INTEGER},#{downpath},
+		insert into spider_waitqueue (id,father_url, url,extractRank, isdownload,downpath,isanalysis,type,create_time)
+		values (#{id,jdbcType=CHAR},#{fatherUrl}, #{url,jdbcType=VARCHAR},#{extractRank},#{isDownload,jdbcType=INTEGER},#{downpath},
 		#{isanalysis},#{type},#{createTime})
 	</insert>
 	<update id="updateDownloadUrl" parameterType="com.liuyi.web.model.SpiderWaitQueue" >
@@ -35,8 +35,8 @@
 	    url
 	    from spider_waitqueue
 	    where isdownload=0 and type=0
-	    order by create_time
-	    limit 0,10
+	    order by create_time,extractRank desc
+	    limit 0,50
 	 </select>
 	 <select id="selectByUrl" resultType="Integer" >
 	 	select  count(1) from system_users where exists(select 1 from spider_waitqueue where url=#{url})
@@ -52,7 +52,7 @@
 		    url
 		    from spider_waitqueue
 		    where isanalysis=0 and type=2 and analysisError &lt; 3
-		    limit 0,10
+		    limit 0,50
 	 </select>
 	 <update id="updateAnalysisError">
 		 update 
