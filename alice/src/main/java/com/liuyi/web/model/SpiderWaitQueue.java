@@ -12,12 +12,20 @@ public class SpiderWaitQueue {
     private Integer isanalysis; // 是否已解析
     private Integer type;       // 网页种类
     private String  fatherUrl;  // 父url
-    
+    private int extractRank;    //抓取等级
     public String getFatherUrl() {
         return fatherUrl;
     }
     
-    public void setFatherUrl(String fatherUrl) {
+    public int getExtractRank() {
+		return extractRank;
+	}
+
+	public void setExtractRank(int extractRank) {
+		this.extractRank = extractRank;
+	}
+
+	public void setFatherUrl(String fatherUrl) {
         this.fatherUrl = fatherUrl;
     }
     

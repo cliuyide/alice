@@ -18,7 +18,7 @@ public class SpiderDaoImpl implements SpiderDao {
     private SpiderMapperInterface spiderMapperInterface;
     
     @Override
-    public int insertNewUrl(String url, String fatherUrl, Integer type) {
+    public int insertNewUrl(String url, String fatherUrl, Integer type,Integer extractRank) {
         SpiderWaitQueue sq = new SpiderWaitQueue();
         sq.setId(UUID.randomUUID().toString());
         sq.setIsDownload(0);// 设置未下载
@@ -27,6 +27,7 @@ public class SpiderDaoImpl implements SpiderDao {
         sq.setType(type);
         sq.setIsanalysis(0);// 设置未解析
         sq.setFatherUrl(fatherUrl);
+        sq.setExtractRank(extractRank);
         return spiderMapperInterface.insertNewUrl(sq);
     }
     
