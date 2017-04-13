@@ -13,4 +13,9 @@ public class RegularContanst {
      * 美食父菜单优先抽取
      */
 	public final static String CATEGORY_DEAL = "[a-zA-z]+://[^\\s]+?/category/+.*";
+	/**
+     * 美食商店菜单
+     */
+    public final static String SHOP_DEAL = "[a-zA-z]+://[^\\s]+?/shop/+.*";
+	
 }

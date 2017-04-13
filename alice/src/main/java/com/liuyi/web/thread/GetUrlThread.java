@@ -61,9 +61,13 @@ private LinkFilter filter;
 					} else {
 						Pattern category = Pattern.compile(RegularContanst.CATEGORY_DEAL);
 						Matcher mcategory = category.matcher(link);
+						Pattern shop = Pattern.compile(RegularContanst.SHOP_DEAL);
+                        Matcher mshop = shop.matcher(link);
 						Integer extractRank=0;
 						if(mcategory.matches()){
 							extractRank=2;
+						}else if(mshop.matches()){
+						    extractRank=3;
 						}
 						spiderDao.insertNewUrl(link, url, type,extractRank);
 					}
