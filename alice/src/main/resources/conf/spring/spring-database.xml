@@ -22,17 +22,15 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
     <bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
+		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass">
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
-		<property name="url">
-			<!--192.168.3.200 -->
-			<!-- <value>jdbc:mysql://192.168.3.200:3306/gangcheng?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf8</value>-->		<!--192.168.3.29 -->
+		<property name="jdbcUrl">
 			<value>jdbc:mysql://localhost:3306/mydatabase?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf8</value>
 
 		</property>
-		<property name="username">
+		<property name="user">
 			<value>root</value>
 		</property>
 		<property name="password">
