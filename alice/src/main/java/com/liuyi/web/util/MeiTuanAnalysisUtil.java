@@ -11,11 +11,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.liuyi.web.contanst.RegularContanst;
 import com.liuyi.web.model.HtmlMeituan;
 
 public class MeiTuanAnalysisUtil {
 	public HtmlMeituan meituanAnalysis(String url) throws IOException {
 		HtmlMeituan hm = new HtmlMeituan();
+		String ip = "183.78.183.156";
+		String port ="82";
+		System.getProperties().setProperty("http.proxyHost",ip);
+        System.getProperties().setProperty("http.proxyPort", port);
 		Document html = Jsoup
 				.connect(url)
 				.header("User-Agent",
@@ -24,7 +29,8 @@ public class MeiTuanAnalysisUtil {
 						"rvct=258; mtcdn=K; iuuid=13FFE02E13A3D1098FB7E815B4BE06BDD0699C1E14CD4A22DD89F6A2759984BE; _lx_utm=; rvd=44274690%2C44274638%2C28576125%2C41133841%2C44149664; abt=1491434780.0%7CBDE; ci=99; __mta=141892877.1490711847258.1491436956596.1491437165926.104; uuid=5b6ed087d10a27e61227.1490711847.0.0.0; oc=Fs5Mg20K5uwkml2_GtyinNJDohyzWfUZtwzUiCVJeCHur6qTk6wLMn8nh7vZ--sFyFltSC1AAcmnommLo_6OUPUeRK4eY501fP906hIQsarV_4VUJiUN1cl7m0vhhuQxKUhlXpFkOJ0E1Jr8-XPHQKT8q4gZSsIw9G2_TDZ-dG8; __utma=211559370.1371189777.1491269839.1491401817.1491434768.11; __utmz=211559370.1491394680.8.2.utmcsr=baidu|utmccn=baidu|utmcmd=organic|utmcct=homepage; __utmv=211559370.|1=city=nn=1^3=dealtype=237=1^5=cate=new=1")
 				.header("Accept",
 						"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-				.timeout(10000).get();
+				.timeout(30000)
+				.get();
 		// 获取页面关键字
 		Elements keywords = this.replaceEmpty(html.getElementsByAttributeValue(
 				"name", "keywords"));

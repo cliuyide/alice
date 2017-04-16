@@ -17,5 +17,9 @@ public class RegularContanst {
      * 美食商店菜单
      */
     public final static String SHOP_DEAL = "[a-zA-z]+://[^\\s]+?/shop/+.*";
+    
+    public final static String IP = "175.155.24.13";
+    
+    public final static String PORT = "808";
 	
 }

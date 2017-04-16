@@ -46,7 +46,7 @@ private LinkFilter filter;
 					Integer type = 0;// 网页类型默认普通
 					Pattern r = Pattern.compile(RegularContanst.MEITUAN_DEAL);
 					Matcher matcher = r.matcher(link);
-					if (link.contains("deal")) {
+					if (link.contains("/deal/")) {
 						if (matcher.find()) {
 							String link1 = matcher.group(0);
 							type = 2;
