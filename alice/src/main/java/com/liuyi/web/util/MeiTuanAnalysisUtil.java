@@ -15,22 +15,20 @@ import com.liuyi.web.contanst.RegularContanst;
 import com.liuyi.web.model.HtmlMeituan;
 
 public class MeiTuanAnalysisUtil {
-	public HtmlMeituan meituanAnalysis(String url) throws IOException {
+	public HtmlMeituan meituanAnalysis(String url,String userAgent) throws IOException {		
 		HtmlMeituan hm = new HtmlMeituan();
-		String ip = "183.78.183.156";
-		String port ="82";
-		System.getProperties().setProperty("http.proxyHost",ip);
-        System.getProperties().setProperty("http.proxyPort", port);
+//		String ip = "202.121.96.33";
+//		String port = "8086";
+//		System.getProperties().setProperty("http.proxyHost", ip);
+//		System.getProperties().setProperty("http.proxyPort", port);
 		Document html = Jsoup
 				.connect(url)
-				.header("User-Agent",
-						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-				.header("Cookie",
-						"rvct=258; mtcdn=K; iuuid=13FFE02E13A3D1098FB7E815B4BE06BDD0699C1E14CD4A22DD89F6A2759984BE; _lx_utm=; rvd=44274690%2C44274638%2C28576125%2C41133841%2C44149664; abt=1491434780.0%7CBDE; ci=99; __mta=141892877.1490711847258.1491436956596.1491437165926.104; uuid=5b6ed087d10a27e61227.1490711847.0.0.0; oc=Fs5Mg20K5uwkml2_GtyinNJDohyzWfUZtwzUiCVJeCHur6qTk6wLMn8nh7vZ--sFyFltSC1AAcmnommLo_6OUPUeRK4eY501fP906hIQsarV_4VUJiUN1cl7m0vhhuQxKUhlXpFkOJ0E1Jr8-XPHQKT8q4gZSsIw9G2_TDZ-dG8; __utma=211559370.1371189777.1491269839.1491401817.1491434768.11; __utmz=211559370.1491394680.8.2.utmcsr=baidu|utmccn=baidu|utmcmd=organic|utmcct=homepage; __utmv=211559370.|1=city=nn=1^3=dealtype=237=1^5=cate=new=1")
+				.header("User-Agent",userAgent)
 				.header("Accept",
 						"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-				.timeout(30000)
-				.get();
+				.header("Accept-Language",
+						"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3")
+				.header("Accept-Encoding", "gzip, deflate").timeout(5000).get();
 		// 获取页面关键字
 		Elements keywords = this.replaceEmpty(html.getElementsByAttributeValue(
 				"name", "keywords"));
@@ -73,13 +71,13 @@ public class MeiTuanAnalysisUtil {
 			String priceElHref = this.replace(url, regexp, meiTuanPriceElHref);
 			Document pricehtml = Jsoup
 					.connect(priceElHref)
-					.header("User-Agent",
-							"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-					.header("Cookie",
-							"rvct=258; mtcdn=K; iuuid=13FFE02E13A3D1098FB7E815B4BE06BDD0699C1E14CD4A22DD89F6A2759984BE; _lx_utm=; rvd=44274690%2C44274638%2C28576125%2C41133841%2C44149664; abt=1491434780.0%7CBDE; ci=99; __mta=141892877.1490711847258.1491436956596.1491437165926.104; uuid=5b6ed087d10a27e61227.1490711847.0.0.0; oc=Fs5Mg20K5uwkml2_GtyinNJDohyzWfUZtwzUiCVJeCHur6qTk6wLMn8nh7vZ--sFyFltSC1AAcmnommLo_6OUPUeRK4eY501fP906hIQsarV_4VUJiUN1cl7m0vhhuQxKUhlXpFkOJ0E1Jr8-XPHQKT8q4gZSsIw9G2_TDZ-dG8; __utma=211559370.1371189777.1491269839.1491401817.1491434768.11; __utmz=211559370.1491394680.8.2.utmcsr=baidu|utmccn=baidu|utmcmd=organic|utmcct=homepage; __utmv=211559370.|1=city=nn=1^3=dealtype=237=1^5=cate=new=1")
+					.header("User-Agent",userAgent)
 					.header("Accept",
 							"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-					.timeout(10000).get();
+					.header("Accept-Language",
+							"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3")
+					.header("Accept-Encoding", "gzip, deflate")
+					.get();
 			String price = pricehtml.getElementById("deal-buy-price").html();
 			Double meituanprice = StringUtils.isNotBlank(price) ? Double
 					.parseDouble(price) : 0;
@@ -159,16 +157,15 @@ public class MeiTuanAnalysisUtil {
 		return elements;
 	}
 
-	public Date getEndTime(String url) throws IOException {
+	public Date getEndTime(String url,String userAgent) throws IOException {
 		Document html = Jsoup
 				.connect(url)
-				.header("User-Agent",
-						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-				.header("Cookie",
-						"rvct=258; mtcdn=K; iuuid=13FFE02E13A3D1098FB7E815B4BE06BDD0699C1E14CD4A22DD89F6A2759984BE; _lx_utm=; rvd=44274690%2C44274638%2C28576125%2C41133841%2C44149664; abt=1491434780.0%7CBDE; ci=99; __mta=141892877.1490711847258.1491436956596.1491437165926.104; uuid=5b6ed087d10a27e61227.1490711847.0.0.0; oc=Fs5Mg20K5uwkml2_GtyinNJDohyzWfUZtwzUiCVJeCHur6qTk6wLMn8nh7vZ--sFyFltSC1AAcmnommLo_6OUPUeRK4eY501fP906hIQsarV_4VUJiUN1cl7m0vhhuQxKUhlXpFkOJ0E1Jr8-XPHQKT8q4gZSsIw9G2_TDZ-dG8; __utma=211559370.1371189777.1491269839.1491401817.1491434768.11; __utmz=211559370.1491394680.8.2.utmcsr=baidu|utmccn=baidu|utmcmd=organic|utmcct=homepage; __utmv=211559370.|1=city=nn=1^3=dealtype=237=1^5=cate=new=1")
+				.header("User-Agent",userAgent)
 				.header("Accept",
 						"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-				.timeout(10000).get();
+				.header("Accept-Language",
+						"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3")
+				.header("Accept-Encoding", "gzip, deflate").get();
 		// 截止日期
 		String endtimeText = html
 				.getElementsByClass("deal-component-expiry-valid-through")
@@ -178,7 +175,7 @@ public class MeiTuanAnalysisUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date endDate = null;
 		try {
-			 endDate = sdf.parse(endTime);
+			endDate = sdf.parse(endTime);
 		} catch (ParseException e) {
 
 			e.printStackTrace();

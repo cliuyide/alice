@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.liuyi.web.contanst.RegularContanst;
 import com.liuyi.web.dao.SpiderDao;
 import com.liuyi.web.model.SpiderWaitQueue;
 import com.liuyi.web.service.SpiderService;
@@ -16,7 +17,7 @@ import com.liuyi.web.util.LinkFilter;
 public class SpiderServiceImpl implements SpiderService {
 	@Autowired
 	private SpiderDao spiderDao;
-
+	int userAgentNumber=0;
 	@Override
 	public int crawling(List<String> urlList) {
 		LinkFilter filter = new LinkFilter() {
@@ -28,14 +29,15 @@ public class SpiderServiceImpl implements SpiderService {
 					return false;
 			}
 		};
+		String[] userAgent=RegularContanst.userAgent;
 		if (urlList != null && urlList.size() > 0) {
 			for (int i = 0; i < 5; i++) {
 				if(i*10<urlList.size()){
 				GetUrlThread gt = new GetUrlThread(urlList, i, spiderDao,
-						filter);
+						filter,userAgent[userAgentNumber]);
 				Thread thread = new Thread(gt);
 				try {
-					Thread.sleep(500);
+					Thread.sleep(2000);
 					thread.start();
 					thread.join();
 				} catch (InterruptedException e) {
@@ -43,6 +45,8 @@ public class SpiderServiceImpl implements SpiderService {
 				}
 				}
 			}
+			userAgentNumber=userAgentNumber<=userAgent.length?userAgentNumber:0;
+			userAgentNumber++;
 			List<String> urlList1 = spiderDao.selectWaitUrl();
 			this.crawling(urlList1);
 		}

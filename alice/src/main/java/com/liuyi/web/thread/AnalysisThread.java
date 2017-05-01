@@ -15,22 +15,24 @@ public class AnalysisThread implements Runnable {
 	private int origin;// 遍历的起点
 	private MeituanDao meituanDao;
 	private SpiderService spiderService;
-
-	public AnalysisThread(List<String> urlList, int origin,
-			MeituanDao meituanDao, SpiderService spiderService) {
+	private String userAgent;
+		public AnalysisThread(List<String> urlList, int origin,
+			MeituanDao meituanDao, SpiderService spiderService,String userAgent) {
 		this.urlList = urlList;
 		this.origin = origin;
 		this.meituanDao = meituanDao;
 		this.spiderService = spiderService;
+		this.userAgent=userAgent;
 	}
 
 	@Override
 	public void run() {
 		for (int i=origin*10;i<origin*10+10;i++) {
 			String url=urlList.get(i).toString();
+			System.out.println(url+"开始解析");
 			try {				
 				HtmlMeituan mtau = new MeiTuanAnalysisUtil()
-						.meituanAnalysis(url);
+						.meituanAnalysis(url,userAgent);
 				mtau.setId(UUID.randomUUID().toString());
 				mtau.setUrl(url);
 				meituanDao.insertSelective(mtau);
@@ -38,6 +40,7 @@ public class AnalysisThread implements Runnable {
 				sq.setIsanalysis(1);
 				sq.setUrl(url);
 				spiderService.updateDownloadUrl(sq);
+				System.out.println(url+"解析完成");
 			} catch (Exception e) {
 				spiderService.updateAnalysisError(url);
 				System.out.println(url + "解析失败");

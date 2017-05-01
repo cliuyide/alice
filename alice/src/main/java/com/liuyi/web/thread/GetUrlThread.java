@@ -18,8 +18,9 @@ public class GetUrlThread implements Runnable{
 private List<String> urlList;
 private int origin;//遍历的起点
 private SpiderDao spiderDao;
+public String userAgent;
 private LinkFilter filter;
-	public GetUrlThread(List<String> urlList,int origin,SpiderDao spiderDao,LinkFilter filter){
+	public GetUrlThread(List<String> urlList,int origin,SpiderDao spiderDao,LinkFilter filter,String userAgent){
 		this.urlList=urlList;
 		this.origin=origin;
 		this.spiderDao=spiderDao;
@@ -40,7 +41,7 @@ private LinkFilter filter;
 			// 提取出下载网页中的 URL
 			Set<String> links;
 			try {
-				links = HtmlParserTool.extracLinks(url, filter);
+				links = HtmlParserTool.extracLinks(url, filter,userAgent);
 				// 新的未访问的 URL 入队
 				for (String link : links) {
 					Integer type = 0;// 网页类型默认普通

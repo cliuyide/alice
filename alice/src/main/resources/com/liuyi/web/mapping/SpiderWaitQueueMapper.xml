@@ -35,7 +35,7 @@
 	    url
 	    from spider_waitqueue
 	    where isdownload=0 and type=0
-	    order by extractRank desc,create_time
+	    order by extractRank desc
 	    limit 0,50
 	 </select>
 	 <select id="selectByUrl" resultType="Integer" >
@@ -51,7 +51,7 @@
 		 select 
 		    url
 		    from spider_waitqueue
-		    where isanalysis=0 and type=2 and analysisError &lt; 3
+		    where isanalysis=0 and type=2 and analysisError &lt; 1
 		    limit 0,50
 	 </select>
 	 <update id="updateAnalysisError">
