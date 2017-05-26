@@ -26,9 +26,6 @@ public class MeituanServiceImpl implements MeituanService {
     int userAgentNumber=0;
 	@Override
 	public void analysisHtmlMeituan() throws IOException {
-		System.setProperty("proxySet", "true");
-		System.setProperty("http.proxyHost", "61.191.173.31");   
-		System.setProperty("http.proxyPort", "808");
 		List<String> listUrl = spiderService.selectIsNotAnalysis();
 		String[] userAgent=RegularContanst.userAgent;
 		for (int i = 0; i < 5; i++) {
@@ -51,5 +48,4 @@ public class MeituanServiceImpl implements MeituanService {
 			this.analysisHtmlMeituan();
 		}
 	}
-
 }

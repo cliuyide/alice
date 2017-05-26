@@ -37,7 +37,7 @@ public class SpiderServiceImpl implements SpiderService {
 						filter,userAgent[userAgentNumber]);
 				Thread thread = new Thread(gt);
 				try {
-					Thread.sleep(2000);
+//					Thread.sleep(1000);
 					thread.start();
 					thread.join();
 				} catch (InterruptedException e) {
@@ -45,14 +45,17 @@ public class SpiderServiceImpl implements SpiderService {
 				}
 				}
 			}
-			userAgentNumber=userAgentNumber<=userAgent.length?userAgentNumber:0;
 			userAgentNumber++;
+			userAgentNumber=userAgentNumber<userAgent.length?userAgentNumber:0;
 			List<String> urlList1 = spiderDao.selectWaitUrl();
 			this.crawling(urlList1);
 		}
 		return 0;
 	}
-
+public static void main(String[] args) {
+	String[] userAgent=RegularContanst.userAgent;
+	System.out.println(userAgent[34]);
+}
 	@Override
 	public int insertNewUrl(String url) {
 

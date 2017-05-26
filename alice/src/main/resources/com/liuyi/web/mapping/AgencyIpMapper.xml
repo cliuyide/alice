@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyi.web.mapping.AgencyIpMapperInterface" >
+  <insert id="insert" parameterType="com.liuyi.web.model.AgencyIp" >
+    insert into agency_ip (id, host, port, 
+      is_used, is_true, update_time
+      )
+    values (#{id}, #{host}, #{port}, 
+      #{isUsed}, #{isTrue}, #{updateTime}
+      )
+  </insert>  
+</mapper>

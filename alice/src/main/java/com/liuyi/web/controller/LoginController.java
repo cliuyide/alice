@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.liuyi.web.service.AgencyService;
 import com.liuyi.web.service.LoginService;
 import com.liuyi.web.service.SpiderService;
 
@@ -16,12 +17,14 @@ public class LoginController {
 	private LoginService loginService;
 	@Autowired
 	private SpiderService spiderService;
+	@Autowired
+	private AgencyService agencyService;
 	@RequestMapping(value = "login/login.do")
 	public ModelAndView Login() {
 		System.out.println("登录成功");
 		ModelAndView result = new ModelAndView();
 		List<String> waitUrlList=spiderService.selectWaitUrl();
-		spiderService.crawling(waitUrlList);
+		agencyService.insertSelective(null);
 		result.setViewName("/alice/login");
 		return result;
 	}

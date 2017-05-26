@@ -25,6 +25,7 @@ private LinkFilter filter;
 		this.origin=origin;
 		this.spiderDao=spiderDao;
 		this.filter=filter;
+		this.userAgent=userAgent;
 	}
 	@Override
 	public void run() {
@@ -78,10 +79,12 @@ private LinkFilter filter;
 				sq.setIsDownload(2);// 设置下载失败
 				sq.setUrl(url);
 				spiderDao.updateDownloadUrl(sq);
+				System.out.println(2+userAgent);
 				e.printStackTrace();
 				continue;
 			} catch (Exception e) {
-				sq.setIsDownload(2);// 设置下载失败
+				sq.setIsDownload(3);// 设置下载失败
+				System.out.println(3+userAgent);
 				sq.setUrl(url);
 				spiderDao.updateDownloadUrl(sq);
 				continue;
